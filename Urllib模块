@@ -1,0 +1,19 @@
+1. 简述
+这里说的urllib模块，是urllib*模块，包括了urllib、urllib2和urllib3等几个。urllib和urllib2都是属于python的基础库，类似于java中官方jdk提供的库，在http://docs.python.org/2/library/internet.html可以看到相关介绍，他们都属于Internet协议和相关支撑的模块部分；除了这两个，其实还有第三方库urllib3和urllib4（截止目前2013-08-28，还没有urllib5，而且urllib4 https://pypi.python.org/pypi/urllib4 也只是到0.2版本，urllib3https://pypi.python.org/pypi/urllib3算比较成熟，到了1.7版本，我也是在考虑使用http连接池的时候发现的这个3）。除了模块儿名本身的混乱之外，还有python自身版本的一些区别。在python2.*到python3.*过程中，urllib模块自身也演化了许多，比如命名上已经不再是1,2这样，而是细分成了urllib.request、urllib.error、urllib.parse和urllib.robotparser等。这里介绍的版本是基于python 2.7.5的。
+
+2. urllib：
+官网的一句话描述是：通过url打开任意资源。从官网的简介来看，这个模块最初是模拟文件模块来实现的，只是将本地的文件路径，改为远程的互联网url。常用操作有：
+urlopen(url, [,data])——根据url打开一个网页，根据参数区分post或者get
+urlretrieve()——将指定url的网页内容复制一份到指定的本地文件
+quote()——将url中的特殊字符或汉字encode成指定编码
+unquote()——将url中的url编码解码
+详情参看：http://docs.python.org/2/library/urllib.html
+
+3. urllib2：
+官网的一句话描述很笼统：打开url的拓展库。主要是说，对url打开的一些更复杂的操作，如操作相关的一些认证、重定向和cookie等等。这样来看，更印证了urllib模块是模拟文件操作实现的思路。因为这些“复杂操作”是打开url独有的，文件操作确实不存在的。urllib2中没有quote和unquote的操作，这个只在urllib中有；同时也没有了urlretrieve。常见的操作：
+urlopen(url,[,data],[,timeout])——增加了请求响应的超时时间，在urllib中需要借助socket模块来实现，这里更方便了，登场率也就更高了
+Request.* ——添加了对Request的支持；也可以方便的操作Header里面的东西了
+详情参看:http://docs.python.org/2/library/urllib2.html
+
+4. urllib3:
+首先，这个不是一个标准库，是一个拓展库。该模块的介绍重点说它的作用：提供了urllib和urllib2中没有的连接池和文件的post功能。由于不是标准库，因此，需要单独下载和安装，地址参看：https://pypi.python.org/pypi/urllib3。虽然他是针对python2.*版本中的urllib和urllib2的遗漏功能启动的项目，但现在也同样支持python3.3中的开发。由于个人尚无python3的使用经验，也就不多说什么了
